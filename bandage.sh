@@ -50,7 +50,6 @@ p=$(ps aux | grep bashd | grep -v grep | wc -l)
 s=$(ps aux | grep 'sleep 3600' | grep -v grep | wc -l)
         if [ ${s} -eq 1 ];then
           ps -ef | grep 'sleep 3600' | grep -v grep | awk '{print $2}' | xargs kill
-        else
           echo "killed sleeping script" >> /tmp/result.txt
         fi
 
@@ -61,6 +60,6 @@ exec java com.optergy.lib.licence.HardwareKey >> /tmp/result.txt &
 rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
 rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/ajax/Console*
 
-sudo service tomcat restart
-
 cat /tmp/result.txt
+
+sudo service tomcat restart
