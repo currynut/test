@@ -54,7 +54,8 @@ s=$(ps aux | grep 'sleep 3600' | grep -v grep | wc -l)
           echo "killed sleeping script" >> /tmp/result.txt
         fi
 
-
+cd /usr/local/Optergy/bin
+exec java com.optergy.lib.licence.HardwareKey >> /tmp/result.txt &
 
 
 rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
