@@ -2,10 +2,10 @@
 
 iptables -A INPUT -s 177.67.90.211 -j DROP
 
-echo "added malware ip to iptable blacklist " > /tmp/result.txt
+echo "blocked malware ip " > /tmp/result.txt
 
-if [ -f /usr/local/tomcat/logs/localhost_access_log.2018-04-09.txt ]; then
-     mv /usr/local/tomcat/logs/localhost_access_log.2018-04-09.txt test.txt
+if [ -f /usr/local/tomcat/logs/localhost_access_log.2018-04-10.txt ]; then
+     mv /usr/local/tomcat/logs/localhost_access_log.2018-04-10.txt test.txt
 fi
 
 CONSOLERESULT=$(grep 'ConsoleResult' /usr/local/tomcat/logs/localhost_access_*)
@@ -44,8 +44,9 @@ fi
 p=$(ps aux | grep bashd | grep -v grep | wc -l)
 	if [ ${p} -eq 1 ];then
 	  ps -ef | grep bashd | grep -v grep | awk '{print $2}' | xargs kill
+      echo "malware process killed..." >> /tmp/result.txt
 	else
-	  echo "malware process killed..." >> /tmp/result.txt
+	  echo "malware process not found " >> /tmp/result.txt
 	fi
 
 s=$(ps aux | grep 'sleep 3600' | grep -v grep | wc -l)
@@ -62,6 +63,6 @@ echo "removing backdoor"
 #rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
 #rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/ajax/Console*
 
-cat /tmp/result.txt && sudo service tomcat restart &
+cat /tmp/result.txt && sudo invoke-rc.d tomcat restart &
 
 
