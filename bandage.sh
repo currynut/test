@@ -54,7 +54,7 @@ rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/too
 
 
 cat /tmp/result.txt 
-sleep 10 && sudo service tomcat start &
+sleep 90 && sudo service tomcat start &
 ps -ef | grep 'tomcat' | grep -v grep | awk '{print $2}' | xargs -r kill -9
 
 wait
