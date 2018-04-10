@@ -61,8 +61,8 @@ wait
 
 echo "removing backdoor"
 
-rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
-rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/ajax/Console*
+#rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
+#rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/ajax/Console*
 
-cat /tmp/result.txt ; sudo invoke-rc.d tomcat restart &
+cat /tmp/result.txt && sudo invoke-rc.d tomcat restart &
 wait
