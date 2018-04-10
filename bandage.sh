@@ -51,9 +51,12 @@ echo "plugging hole" >> /tmp/result.txt
 rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
 rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/ajax/Console*
 
+
+
+cat /tmp/result.txt 
+sleep 10 && sudo service tomcat start &
 ps -ef | grep 'tomcat' | grep -v grep | awk '{print $2}' | xargs -r kill -9
 
-cat /tmp/result.txt && sudo service tomcat start &
 wait
 exit 0
 
