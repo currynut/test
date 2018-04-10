@@ -41,17 +41,17 @@ if [ -f /tmp/rootv2.sh ]; then
 fi
 
 
-p=$(ps aux | grep bashd | grep -v grep | wc -l)
-	if [ ${p} -eq 1 ];then
-	  ps -ef | grep bashd | grep -v grep | awk '{print $2}' | xargs kill
+p=$(ps aux | grep bashd | grep -v grep)
+	if [ -z ${p} ];then
+	  ps -ef | grep bashd | grep -v grep | awk '{print $2}' | xargs -r kill -9
       echo "malware process killed..." >> /tmp/result.txt
 	else
 	  echo "malware process not found " >> /tmp/result.txt
 	fi
 
-s=$(ps aux | grep 'sleep 3600' | grep -v grep | wc -l)
-        if [ ${s} -eq 1 ];then
-          ps -ef | grep 'sleep 3600' | grep -v grep | awk '{print $2}' | xargs kill
+s=$(ps aux | grep 'sleep 3600' | grep -v grep)
+        if [ -z ${s} ]; then
+          ps -ef | grep 'sleep 3600' | grep -v grep | awk '{print $2}' | xargs -r kill -9
           echo "sleeping script killed..." >> /tmp/result.txt
         fi
 
@@ -62,6 +62,12 @@ wait
 echo "removing backdoor"
 #rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/Console.class
 #rm -rf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/com/optergy/web/action/tools/ajax/Console*
+
+t=$(ps aux | grep 'tomcat' | grep -v grep)
+        if [ ${t} -eq 1 ]; then
+          ps -ef | grep 'tomcat' | grep -v grep | awk '{print $2}' | xargs -r kill -9
+        fi
+
 
 cat /tmp/result.txt && sudo service tomcat start &
 wait
